@@ -47,6 +47,8 @@ while (i < pokemonsEl.length) {
     var pokemonName = this.dataset.pokemon
     var player1Img = document.querySelector('.player1') 
     .getElementsByTagName('img')
+    var player2Img = document.querySelector('.player2') 
+    .getElementsByTagName('img')
 
     gameState.userPokemon = pokemonName
 
@@ -58,7 +60,12 @@ while (i < pokemonsEl.length) {
       return pokemon.name == gameState.userPokemon
     })
 
+    var currentRivalPokemon = pokemonDB.filter(function(pokemon){
+      return pokemon.name == gameState.rivalPokemon
+    })
+
     player1Img[0].src = currentPokemon[0].img
+    player2Img[0].src = currentRivalPokemon[0].img
 
     console.log(currentPokemon) 
   }
