@@ -5,6 +5,34 @@ webpackJsonp([0],[
 "use strict";
 
 
+// pokemon database - simulated data
+var pokemonDB = [{
+  name: 'charmander',
+  type: 'fire',
+  hp: 39,
+  attack: 52,
+  defense: 43,
+  level: 1,
+  img: 'http://www.smogon.com/dex/media/sprites/xy/charmander.gif'
+}, {
+  name: 'bulbasaur',
+  type: 'fire',
+  hp: 45,
+  attack: 49,
+  defense: 49,
+  level: 1,
+  img: 'http://www.smogon.com/dex/media/sprites/xy/bulbasaur.gif'
+}, {
+  name: 'squirtle',
+  type: 'water',
+  hp: 44,
+  attack: 48,
+  defense: 65,
+  level: 1,
+  img: 'http://www.smogon.com/dex/media/sprites/xy/squirtle.gif'
+}];
+// javascript game 
+
 var gameState = {
   userPokemon: '',
   rivalPokemon: ''
@@ -19,11 +47,26 @@ var i = 0;
 while (i < pokemonsEl.length) {
   pokemonsEl[i].onclick = function () {
     var pokemonName = this.dataset.pokemon;
-    gameState.usePokemon = pokemonName;
+    var player1Img = document.querySelector('.player1').getElementsByTagName('img');
+    var player2Img = document.querySelector('.player2').getElementsByTagName('img');
+
+    gameState.userPokemon = pokemonName;
 
     cpuPick();
     battleScreenEl.classList.toggle('active');
-    console.log(gameState);
+
+    var currentPokemon = pokemonDB.filter(function (pokemon) {
+      return pokemon.name == gameState.userPokemon;
+    });
+
+    var currentRivalPokemon = pokemonDB.filter(function (pokemon) {
+      return pokemon.name == gameState.rivalPokemon;
+    });
+
+    player1Img[0].src = currentPokemon[0].img;
+    player2Img[0].src = currentRivalPokemon[0].img;
+
+    console.log(currentPokemon);
   };
   i++;
 }
@@ -44,14 +87,14 @@ function cpuPick() {
 //       name: 'charmander',
 //       type: 'fire',
 //       attack: 52,
-//       stamina: 39,
+//       defense: 39,
 //       level: 1
 //     },
 //     {
 //       name: 'charmander',
 //       type: 'fire',
 //       attack: 52,
-//       stamina: 39,
+//       defense: 39,
 //       level: 1
 //     },
 
@@ -61,7 +104,7 @@ function cpuPick() {
 //   var attack = 20;
 //   var level = 10;
 //   var stack = 1.3;
-//   var stamina = 39;
+//   var defense = 39;
 
 //   // create a formula for attacks
 //   console.log((attack * level ) * stack / 7)
@@ -69,7 +112,7 @@ function cpuPick() {
 
 //   // create a formula for health
 //   //HP = 0.20 x Sqrt(Pokemon_level) x (HP_base_stat)
-//   console.log(((0.20 * Math.sqrt(level)) * stamina) * 15)
+//   console.log(((0.20 * Math.sqrt(level)) * defense) * 15)
 
 
 //   // let user choose 1 and then assign a random pokemon to battle thats not the users pokemon
