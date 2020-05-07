@@ -42,9 +42,13 @@ var pokemonsEl = document.querySelector('.select-screen')
 .querySelectorAll('.character')
 console.log(pokemonsEl)
 var battleScreenEl = document.getElementById('battle-screen')
-var i = 0;
+var attackBtnsEl = document.getElementById('battle-screen')
+.querySelectorAll('.attack')
+console.log(attackBtnsEl)
+
 
     //this is the initial loop
+    var i = 0;
 
 while (i < pokemonsEl.length) {
     // add function to all characters on screen select
@@ -105,6 +109,32 @@ while (i < pokemonsEl.length) {
     // then who ever gets to health <= 0 looses
   }
   i++
+}
+
+var a = 0
+while (a < attackBtnsEl.length) {
+  attackBtnsEl[a].onclick = function() {
+    var attackName = this.dataset.attack
+    gameState.currentUserAttack = attackName
+    
+    play(attackName)
+
+  }
+  a++
+}
+
+var play = function(userAttack) {
+  switch(userAttack) {
+    case 'rock':
+      console.log(userAttack)
+      break;
+    case 'paper':
+      console.log(userAttack)
+      break;
+      case 'scissors':
+        console.log(userAttack)
+        break;
+  }
 }
 
 var randomNumber = function (min, max) {
@@ -188,6 +218,4 @@ var cpuPick = function () {
   
   
   
-//   // when one user loses all his health declare a winner
-  
-  
+//   when one user loses all his health declare a winner  
