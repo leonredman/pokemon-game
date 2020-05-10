@@ -44,9 +44,11 @@ console.log(gameState);
 var pokemonsEl = document.querySelector('.select-screen').querySelectorAll('.character');
 console.log(pokemonsEl);
 var battleScreenEl = document.getElementById('battle-screen');
-var i = 0;
+var attackBtnsEl = document.getElementById('battle-screen').querySelectorAll('.attack');
+console.log(attackBtnsEl);
 
 //this is the initial loop
+var i = 0;
 
 while (i < pokemonsEl.length) {
   // add function to all characters on screen select
@@ -107,6 +109,31 @@ while (i < pokemonsEl.length) {
   i++;
 }
 
+var a = 0;
+while (a < attackBtnsEl.length) {
+  attackBtnsEl[a].onclick = function () {
+    var attackName = this.dataset.attack;
+    gameState.currentUserAttack = attackName;
+
+    play(attackName);
+  };
+  a++;
+}
+
+var play = function play(userAttack) {
+  switch (userAttack) {
+    case 'rock':
+      console.log(userAttack);
+      break;
+    case 'paper':
+      console.log(userAttack);
+      break;
+    case 'scissors':
+      console.log(userAttack);
+      break;
+  }
+};
+
 var randomNumber = function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
@@ -155,7 +182,7 @@ var cpuPick = function cpuPick() {
 //   // p1 vs p2
 
 
-//   // when one user loses all his health declare a winner
+//   when one user loses all his health declare a winner
 
 /***/ })
 ],[0]);
