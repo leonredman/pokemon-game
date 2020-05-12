@@ -117,15 +117,31 @@ while (a < attackBtnsEl.length) {
     var attackName = this.dataset.attack
     gameState.currentUserAttack = attackName
     
-    play(attackName)
+    play(attackName, cpuAttack())
 
   }
   a++
 }
 
-var play = function(userAttack) {
+var cpuAttack = function() {
+  var attacks = ['rock', 'paper', 'scissors']
+
+  return attacks[randomNumber(0,3)]
+}
+
+var play = function(userAttack, cpuAttack){
   switch(userAttack) {
     case 'rock':
+      if (cpuAttack == 'paper') {
+        console.log('paper killed rock')
+      }
+      if(cpuAttack == 'scissors') {
+        console.log('rock killed paper')
+      }
+      if(cpuAttack == 'rock') {
+        console.log('its a draw')
+      }
+
       console.log(userAttack)
       break;
     case 'paper':
