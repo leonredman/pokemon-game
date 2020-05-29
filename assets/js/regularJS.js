@@ -78,7 +78,7 @@ while (i < pokemonsEl.length) {
     gameState.currentPokemon = pokemonDB.filter(function(pokemon){
       return pokemon.name == gameState.userPokemon
     })
-    player1Img[0].src = currentPokemon[0].img
+    player1Img[0].src = gameState.currentPokemon[0].img
     
     // select data from current cpu pokemon
     gameState.currentRivalPokemon = pokemonDB.filter(function(pokemon){
