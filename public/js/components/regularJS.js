@@ -60,6 +60,7 @@ while (i < pokemonsEl.length) {
 
     var player1Img = document.querySelector('.player1').getElementsByTagName('img');
     var player2Img = document.querySelector('.player2').getElementsByTagName('img');
+
     // we save the current pokemon
 
     gameState.userPokemon = pokemonName;
@@ -72,16 +73,18 @@ while (i < pokemonsEl.length) {
 
     // select data from current user pokemon
 
-    var currentPokemon = pokemonDB.filter(function (pokemon) {
+    gameState.currentPokemon = pokemonDB.filter(function (pokemon) {
       return pokemon.name == gameState.userPokemon;
     });
-    player1Img[0].src = currentPokemon[0].img;
+    player1Img[0].src = gameState.currentPokemon[0].img;
 
     // select data from current cpu pokemon
-    var currentRivalPokemon = pokemonDB.filter(function (pokemon) {
+    gameState.currentRivalPokemon = pokemonDB.filter(function (pokemon) {
       return pokemon.name == gameState.rivalPokemon;
     });
-    player2Img[0].src = currentRivalPokemon[0].img;
+    player2Img[0].src = gameState.currentRivalPokemon[0].img;
+
+    console.log(calculateInitialHealth(gameState.currentPokemon));
 
     // user choose attack
 
@@ -124,6 +127,10 @@ var cpuAttack = function cpuAttack() {
   var attacks = ['rock', 'paper', 'scissors'];
 
   return attacks[randomNumber(0, 3)];
+};
+
+var calculateInitialHealth = function calculateInitialHealth(user) {
+  return 0.20 * Math.sqrt(user.level) * user.defense * user.hp;
 };
 
 var play = function play(userAttack, cpuAttack) {
