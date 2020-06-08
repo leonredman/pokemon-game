@@ -86,8 +86,8 @@ while (i < pokemonsEl.length) {
     })
     player2Img[0].src = gameState.currentRivalPokemon[0].img
 
-    
-    console.log(calculateInitialHealth(gameState.currentPokemon))
+    gameState.currentPokemon[0].health = calculateInitialHealth(gameState.currentPokemon)
+    console.log(gameState)
 
     // user choose attack
 
@@ -134,9 +134,11 @@ var cpuAttack = function() {
 }
 
 var calculateInitialHealth = function(user){
-  return ((0.20 * Math.sqrt(user.level)) * user.defense) * user.hp
+  
+  return ((0.20 * Math.sqrt(user[0].level)) * user[0].defense) * user[0].hp
 
 }
+
 
 var play = function(userAttack, cpuAttack){
   switch(userAttack) {
