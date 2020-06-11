@@ -40,11 +40,11 @@ console.log(gameState)
 // elements 
 var pokemonsEl = document.querySelector('.select-screen')
 .querySelectorAll('.character')
-console.log(pokemonsEl)
-var battleScreenEl = document.getElementById('battle-screen')
-var attackBtnsEl = document.getElementById('battle-screen')
-.querySelectorAll('.attack')
-console.log(attackBtnsEl)
+  console.log(pokemonsEl)
+  var battleScreenEl = document.getElementById('battle-screen')
+  var attackBtnsEl = document.getElementById('battle-screen')
+  .querySelectorAll('.attack')
+  console.log(attackBtnsEl)
 
 
     //this is the initial loop
@@ -119,7 +119,7 @@ while (i < pokemonsEl.length) {
 
 var a = 0
 while (a < attackBtnsEl.length) {
-  attackBtnsEl[a].onclick = function() {
+    attackBtnsEl[a].onclick = function() {
     var attackName = this.dataset.attack
     gameState.currentUserAttack = attackName
     
@@ -141,38 +141,133 @@ var calculateInitialHealth = function(user){
 
 }
 
-var attackMove = function(attack, level, stack, critical, enemy) {
- console.log('enemy.health before: ' + enemy.health)
-var attackAmount = ((attack * level ) * (stack + critical))
-enemy.health = enemy.health - attackAmount
-
-console.log('enemy.health after: ' + enemy.health)
+var attackMove = function(attack, level, stack, critical, enemy, attacker) {
+  console.log(enemy.name + ' before: ' + enemy.health)
+  var attackAmount = ((attack * level ) * (stack + critical))
+  enemy.health = enemy.health - attackAmount
+  checkWinner(enemy, attacker) 
+  console.log(enemy.name + ' after: ' + enemy.health)
 }
-
+var checkWinner = function(enemy, attacker) {
+  if(enemy.health <= 0) {
+  console.log('HEY WINNERRRRRR ' + attacker.name)
+  }
+}
 
 var play = function(userAttack, cpuAttack){
   var currentPokemon = gameState.currentPokemon[0]
-var currentRivalPokemon = gameState.currentPokemon[0]
+  var currentRivalPokemon = gameState.currentRivalPokemon[0]
   switch(userAttack) {
     case 'rock':
       if (cpuAttack == 'paper') {
-          attackMove(currentPokemon.attack, currentPokemon.level, .8, .5, currentRivalPokemon)
-          console.log('paper killed rock')
-      }
-      if(cpuAttack == 'scissors') {
-        console.log('rock killed paper')
-      }
-      if(cpuAttack == 'rock') {
-        console.log('its a draw')
+        if(currentPokemon.health >= 1 && currentRivalPokemon.health >=1){
+          // user
+            attackMove(currentPokemon.attack, currentPokemon.level, .8, .5, currentRivalPokemon,
+              currentPokemon)
+            if(currentRivalPokemon.health >= 1) {
+              // cpu
+                attackMove(currentRivalPokemon.attack, currentRivalPokemon.level, .8, 2, currentPokemon, currentRivalPokemon)
+            }
+          }
       }
 
-      console.log(userAttack)
+      if(cpuAttack == 'scissors') {
+        if(currentPokemon.health >= 1 && currentRivalPokemon.health >=1){
+          // user
+         attackMove(currentPokemon.attack, currentPokemon.level, .8, 2, currentRivalPokemon,
+          currentPokemon)
+         if(currentRivalPokemon.health >= 1) {
+            // cpu
+            attackMove(currentRivalPokemon.attack, currentRivalPokemon.level, .8, .5, currentPokemon, currentRivalPokemon)
+            }
+          }
+      }
+
+      if(cpuAttack == 'rock') {
+        if(currentPokemon.health >= 1 && currentRivalPokemon.health >=1){
+          // user
+         attackMove(currentPokemon.attack, currentPokemon.level, .8, 1, currentRivalPokemon,
+          currentPokemon)
+         if(currentRivalPokemon.health >= 1) {
+            // cpu
+            attackMove(currentRivalPokemon.attack, currentRivalPokemon.level, .8, 1, currentPokemon, currentRivalPokemon)
+            }
+          }
+      }
+
+      
       break;
     case 'paper':
-      console.log(userAttack)
+      if (cpuAttack == 'paper') {
+        if(currentPokemon.health >= 1 && currentRivalPokemon.health >=1){
+          // user
+          attackMove(currentPokemon.attack, currentPokemon.level, .8, 1, currentRivalPokemon,
+            currentPokemon)
+          if(currentRivalPokemon.health >= 1) {
+              // cpu
+              attackMove(currentRivalPokemon.attack, currentRivalPokemon.level, .8, 1, currentPokemon, currentRivalPokemon)
+              }
+            }
+      }
+
+      if(cpuAttack == 'scissors') {
+        if(currentPokemon.health >= 1 && currentRivalPokemon.health >=1){
+          // user
+         attackMove(currentPokemon.attack, currentPokemon.level, .8, .5, currentRivalPokemon,
+          currentPokemon)
+         if(currentRivalPokemon.health >= 1) {
+            // cpu
+            attackMove(currentRivalPokemon.attack, currentRivalPokemon.level, .8, 2, currentPokemon, currentRivalPokemon)
+            }
+          }
+      }
+      if(cpuAttack == 'rock') {
+        if(currentPokemon.health >= 1 && currentRivalPokemon.health >=1){
+          // user
+         attackMove(currentPokemon.attack, currentPokemon.level, .8, 2, currentRivalPokemon,
+          currentPokemon)
+         if(currentRivalPokemon.health >= 1) {
+            // cpu
+            attackMove(currentRivalPokemon.attack, currentRivalPokemon.level, .8, .5, currentPokemon, currentRivalPokemon)
+            }
+          }
+      }
       break;
       case 'scissors':
-        console.log(userAttack)
+        if (cpuAttack == 'paper') {
+          if(currentPokemon.health >= 1 && currentRivalPokemon.health >=1){
+            // user
+            attackMove(currentPokemon.attack, currentPokemon.level, .8, 2, currentRivalPokemon,
+              currentPokemon)
+            if(currentRivalPokemon.health >= 1) {
+              // cpu
+              attackMove(currentRivalPokemon.attack, currentRivalPokemon.level, .8, .5, currentPokemon, currentRivalPokemon)
+              }
+            }
+        }
+        if(cpuAttack == 'scissors') {
+          if(currentPokemon.health >= 1 && currentRivalPokemon.health >=1){
+            // user
+           attackMove(currentPokemon.attack, currentPokemon.level, .8, 1, currentRivalPokemon,
+            currentPokemon)
+           if(currentRivalPokemon.health >= 1) {
+              // cpu
+              attackMove(currentRivalPokemon.attack, currentRivalPokemon.level, .8, 1, currentPokemon, currentRivalPokemon)
+              }
+            }
+        }
+        if(cpuAttack == 'rock') {
+          if(currentPokemon.health >= 1 && currentRivalPokemon.health >=1){
+            // user
+           attackMove(currentPokemon.attack, currentPokemon.level, .8, .5, currentRivalPokemon,
+            currentPokemon)
+           if(currentRivalPokemon.health >= 1) {
+              // cpu
+              attackMove(currentRivalPokemon.attack, currentRivalPokemon.level, .8, 2, currentPokemon,
+                 currentRivalPokemon)
+              }
+            }
+        }
         break;
   }
 }
@@ -185,27 +280,6 @@ var cpuPick = function () {
 
  gameState.rivalPokemon = pokemonsEl[randomNumber(0, 3)].dataset.pokemon
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
