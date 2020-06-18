@@ -99,7 +99,10 @@ var gameState = {
 
         //current user and cpu pokemon initial health
         gameState.currentPokemon[0].health = gameState.calculateInitialHealth(gameState.currentPokemon);
+        gameState.currentPokemon[0].originalHealth = gameState.calculateInitialHealth(gameState.currentPokemon);
+
         gameState.currentRivalPokemon[0].health = gameState.calculateInitialHealth(gameState.currentRivalPokemon);
+        gameState.currentRivalPokemon[0].originalHealth = gameState.calculateInitialHealth(gameState.currentRivalPokemon);
         console.log(gameState);
       };
       i++;
@@ -130,12 +133,27 @@ var gameState = {
     console.log(enemy.name + ' before: ' + enemy.health);
     var attackAmount = attack * level * (stack + critical);
     enemy.health = enemy.health - attackAmount;
+
+    var userHP = document.querySelector('.player1').querySelector('.stats').querySelector('.health').querySelector('.health-bar').querySelector('.inside');
+
+    var cpuHP = document.querySelector('.player2').querySelector('.stats').querySelector('.health').querySelector('.health-bar').querySelector('.inside');
+    if (enemy.owner == 'user') {
+      var minusPercent = enemy.health * 100 / enemy.originalHealth;
+      console.log(userHP);
+      userHP.style.width = (minusPercent < 0 ? 0 : minusPercent) + '%';
+    } else {
+      var minusPercent = enemy.health * 100 / enemy.originalHealth;
+      console.log(userHP);
+      cpuHP.style.width = (minusPercent < 0 ? 0 : minusPercent) + '%';
+    }
     gameState.checkWinner(enemy, attacker);
     console.log(enemy.name + ' after: ' + enemy.health);
   },
+
   checkWinner: function checkWinner(enemy, attacker) {
     if (enemy.health <= 0) {
       console.log('HEY WINNERRRRRR ' + attacker.name);
+      document.getElementById("who-won").innerHTML = 'THE WINNER IS ' + attacker.name;
     }
   },
 
@@ -144,12 +162,16 @@ var gameState = {
   },
 
   cpuPick: function cpuPick() {
-
-    gameState.rivalPokemon = gameState.elements.pokemonsEl[gameState.randomNumber(0, 3)].dataset.pokemon;
+    do {
+      gameState.rivalPokemon = gameState.elements.pokemonsEl[gameState.randomNumber(0, 3)].dataset.pokemon;
+      console.log('looping ' + gameState.rivalPokemon);
+    } while (gameState.userPokemon == gameState.rivalPokemon);
   },
   play: function play(userAttack, cpuAttack) {
     var currentPokemon = gameState.currentPokemon[0];
     var currentRivalPokemon = gameState.currentRivalPokemon[0];
+    currentPokemon.owner = 'user';
+    currentRivalPokemon.owner = 'cpu';
     switch (userAttack) {
       case 'rock':
         if (cpuAttack == 'paper') {
